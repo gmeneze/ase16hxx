@@ -1,4 +1,4 @@
-### [Coding assignment for hw1] (https://github.com/txt/ase16/blob/master/doc/hw1.md)
+### [hw1: coding assignment] (https://github.com/txt/ase16/blob/master/doc/hw1.md)
 1. Watch the great [Kent Beck video on how to write a test engine in just a few lines of code](https://www.youtube.com/watch?v=nIonZ6-4nuU). Note
 that that example is in CoffeeScript. For the equivalent Python code, see
 [utest.py](../src/utest.py).

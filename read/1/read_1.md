@@ -1,5 +1,5 @@
 ### Paper Review
-* [Duplicate bug report detection with a combination of information retrieval and topic modeling]  (http://dl.acm.org/citation.cfm?id=2351687)
+Paper: [Duplicate bug report detection with a combination of information retrieval and topic modeling]  (http://dl.acm.org/citation.cfm?id=2351687)
 
 1. *Reading*
   + 	Anh Tuan Nguyen, Tung Thanh Nguyen, Tien N. Nguyen, David Lo and Chengnian Sun. 2012. Duplicate bug report detection with a combination of information retrieval and topic modeling. In Proceedings of the 27th IEEE/ACM International Conference on Automated Software Engineering (ASE 2012).

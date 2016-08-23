@@ -1,10 +1,9 @@
-from  utest import ok, oks
+import utest 
 import who1
 import who2
+import who3
 
-@ok
+@utest.ok
 def _ok4():
-  "Can at least one test pass?"
-  assert 1==1, "equality failure"
-
-oks()
+  "New passing test case"
+  assert 2==2, "equality failure"

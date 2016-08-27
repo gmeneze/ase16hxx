@@ -3,16 +3,13 @@ def print_line(s1,s2,r):
 		print s1,
 		for j in range (0,4):
 			print s2,
-	print s1	
-	return
+	print s1
 
 def print_hline(r):
-	print_line('+','-',r)	
-	return
+	print_line('+','-',r)
 
 def print_vline(r):
 	print_line('/',' ',r)
-	return
 
 def print_grid(r,c):
 	for i in range (0,c):
@@ -20,6 +17,5 @@ def print_grid(r,c):
 		for j in range (0,4):
 			print_vline(r)
 	print_hline(r)
-	return
 
 print_grid(4,5)

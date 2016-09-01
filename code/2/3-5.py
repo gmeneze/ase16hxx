@@ -18,4 +18,4 @@ def print_grid(r,c):
 			print_vline(r)
 	print_hline(r)
 
-print_grid(4,5)
+print_grid(4,4)

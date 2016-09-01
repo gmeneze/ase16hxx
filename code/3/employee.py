@@ -8,10 +8,22 @@ class Employee:
         self.age = age
 
     def __repr__(self):
-        return "name is: " + self.name + " age is: " + repr(self.age)
+        return "name is:<" + self.name + "> age is:<" + repr(self.age) + ">"
 
     def __lt__(self, other):
-    	print("This is called")
     	return True if self.age < other.age else False
 
+if __name__ == '__main__':
+	emp1 = Employee("Glen", 26)
+	emp2 = Employee("Deepak", 24)
+	emp3 = Employee("Shweta", 22)
 
+	print(emp1)
+
+	lst = [emp1, emp2, emp3]
+
+	print("unsorted list:", lst)
+
+	lst.sort()
+
+	print("sorted list:", lst)

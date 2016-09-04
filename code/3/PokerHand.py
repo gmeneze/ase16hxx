@@ -7,7 +7,7 @@ License: GNU GPLv3 http://www.gnu.org/licenses/gpl.html
 
 """
 from __future__ import division,print_function
-import sys,re,traceback,random,string
+import sys,re,traceback,random,string, readline
 sys.dont_write_bytecode=True
 
 from Card import *
@@ -203,9 +203,16 @@ class PokerHand(Hand):
 
 if __name__ == '__main__':
     hist = Hist()
-    deck_count = 1000
-    hand_size = 7
-    hand_count = int(52/7)
+    try:
+        input = raw_input('Prompt (enter size of a hand):')
+        hand_size = int(input)
+        input = raw_input('Prompt (enter number of trials):')
+        deck_count = int(input)
+    except:
+        print("invalid input!")
+        raise 
+
+    hand_count = int(52/hand_size)
     for i in range(deck_count):
         # make a deck
         deck = Deck()
@@ -215,7 +222,7 @@ if __name__ == '__main__':
 
         for i in range(hand_count):
             hand = PokerHand()
-            deck.move_cards(hand, 7)
+            deck.move_cards(hand, hand_size)
             hand.sort()
             print(hand)
             hand.classify(hist)

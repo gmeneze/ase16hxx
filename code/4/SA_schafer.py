@@ -24,7 +24,7 @@ class SA(object):
             f2_ret = pow(s-2, 2)
             return f2_ret
 
-    def __init__(self, kmax = 100, seed = 1, emax = -1, s0 = 0):
+    def __init__(self, kmax = 1000, seed = 1, emax = -1, s0 = 0):
         self.kmax = kmax
         random.seed(seed)
         self.s0 = s0
@@ -52,7 +52,7 @@ class SA(object):
     def neighbor(self, s, k):
         factor = k/self.kmax
         while True:
-            s += random.randint(SA.Schaffer.lower_bound, SA.Schaffer.upper_bound) * factor
+            s += random.randint(int(SA.Schaffer.lower_bound - s), int(SA.Schaffer.upper_bound - s)) * factor
             if s > SA.Schaffer.lower_bound and s < SA.Schaffer.upper_bound:
                 break
         return s
@@ -92,7 +92,22 @@ if __name__ == '__main__':
     print(time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime()))
     print("!!! Schaffer")
 
-    sa = SA(1000,100,-1,3000)
+    kmax = 1000
+    seed = 1
+    emax = -1
+    s0 = 0
+
+    if len(sys.argv) >= 2:
+        kmax = int(sys.argv[1])
+    if len(sys.argv) >= 3:
+        seed = int(sys.argv[2])
+    if len(sys.argv) >= 4:
+        emax = int(sys.argv[3])
+    if len(sys.argv) >= 5:
+        s0 = int(sys.argv[4])
+
+    print("kmax is: %s, seed is: %s, emax is: %s, s0 is: %s" % (kmax, seed, emax, s0))
+    sa = SA(kmax, seed, emax, s0)
     sb, eb = sa.minimize()
 
     print("\nsb = %s" % (sb))

@@ -1,5 +1,5 @@
 from __future__ import division,print_function
-import sys,re,traceback,random,string,math, numpy
+import sys,re,traceback,random,string,math, numpy, time
 sys.dont_write_bytecode=True
 
 class SA(object):
@@ -15,7 +15,6 @@ class SA(object):
             if s >= SA.Schaffer.upper_bound or s <= SA.Schaffer.lower_bound:
                 raise ValueError("Illegal value of x in calculation of f1, out of bounds, value of is: " + str(s))
             f1_ret = pow(s, 2)
-            # print("input s:<%s>, f1 ret: <%s>" % (s, f1_ret))
             return f1_ret
 
         @staticmethod
@@ -23,7 +22,6 @@ class SA(object):
             if s >= SA.Schaffer.upper_bound or s <= SA.Schaffer.lower_bound:
                 raise ValueError("Illegal value of x in calculation of f1, out of bounds, value of is: " + str(s))
             f2_ret = pow(s-2, 2)
-            # print("input s:<%s>, f1 ret: <%s>" % (s, f2_ret))
             return f2_ret
 
     def __init__(self, kmax = 100, seed = 1, emax = -1, s0 = 0):
@@ -31,7 +29,6 @@ class SA(object):
         random.seed(seed)
         self.s0 = s0
         self.schaffer_max, self.schaffer_min = self.__calculate_max_min(100)
-        # print("schaffer_max is: <%s>, schaffer_min is: <%s>" % (self.schaffer_max, self.schaffer_min))
         self.emax = emax
 
     @staticmethod
@@ -40,29 +37,24 @@ class SA(object):
         for i in xrange(iterations+1):
             # random state
             s = random.randint(SA.Schaffer.lower_bound, SA.Schaffer.upper_bound)
-            # print("lower bound is: <%s>, upper bound is: <%s>, random is: <%s>" % (SA.Schaffer.lower_bound, SA.Schaffer.upper_bound, s))
             sum = SA.Schaffer.f1(s) + SA.Schaffer.f2(s)
-            # print("schaffer lower bound: <%s>, schaffer upper bound: <%s>, s is: <%s>, sum is: <%s>"  % (SA.Schaffer.lower_bound,
-            #      SA.Schaffer.upper_bound, s, sum))
             arr.append(sum)
-        # print("numpy max is: <%s> , numpy min is: <%s>" % (numpy.amax(arr), numpy.amin(arr)))
         return numpy.amin(arr), numpy.amax(arr)
 
     def p(self, e, en, ratio):
-        # print("input is: e: <%s>, en: <%s>, ration: <%s>" % (e, en, ratio))
+        ratio = 1 - ratio
         val =  pow(math.e, ((e - en) / ratio))
-        # print("return value: <%s>", val)
         return val
 
     def E(self, s):
         return ((SA.Schaffer.f1(s) + SA.Schaffer.f2(s)) - self.schaffer_min) / (self.schaffer_max - self.schaffer_min)
 
-    def neighbor(self, s):
+    def neighbor(self, s, k):
+        factor = k/self.kmax
         while True:
-            s += random.randint(-50, 50)
+            s += random.randint(SA.Schaffer.lower_bound, SA.Schaffer.upper_bound) * factor
             if s > SA.Schaffer.lower_bound and s < SA.Schaffer.upper_bound:
                 break
-
         return s
 
     def minimize(self):
@@ -73,8 +65,10 @@ class SA(object):
             k = self.kmax
 
             while k > 0 and e > self.emax:
-                sn = self.neighbor(s)
+                sn = self.neighbor(s, k)
                 en = self.E(sn)
+
+                if k % 25 == 0: print("\n%04d, %3.2f, " % (k, eb), end="")
 
                 if en < eb:
                     sb = sn
@@ -89,14 +83,17 @@ class SA(object):
                     e = en
                     print("?", end="")
                 print(".", end="")
-                if k%25 == 0: print("\n%04d, %3.2f" % (k, eb), end = "")
                 k = k-1
             return sb, eb
 
 
 if __name__ == '__main__':
-    sa = SA(1000,1,-1,8000)
+    print("#########saDemo############")
+    print(time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime()))
+    print("!!! Schaffer")
+
+    sa = SA(1000,100,-1,3000)
     sb, eb = sa.minimize()
 
-    print("sb = %s" % (sb))
+    print("\nsb = %s" % (sb))
     print("eb = %s" % (eb))

@@ -1,20 +1,12 @@
 # Coding Home Work 3 Submission
 
-Run 10-15.8.py, where the program prints probability of duplicates with 23 birthdays
+Run SA_schafer.py and provide parameters for kmax, seed, emax and s0 if you wish to use non-default values.
 
-![alt code-execution-results-10-15.8](https://github.com/gmeneze/ase16hxx/blob/master/code/3/.images/10-15.8.png "")
+with kmax = 1000, seed = 1, emax = -1 and s0 = 0 :-
+![alt code-execution-results-SA-schafer-1](https://github.com/gmeneze/ase16hxx/blob/master/code/4/.images/Capture2.png)
 
-Run Employee.py, where the program prints the formatted string and the output sorted based on age :-
+with kmax = 1000, seed = 10, emax = -1 and s0 = 0 :-
+![alt code-execution-results-SA-schafer-2](https://github.com/gmeneze/ase16hxx/blob/master/code/4/.images/Capture1.png)
 
-![alt code-execution-results-Employee](https://github.com/gmeneze/ase16hxx/blob/master/code/3/.images/Employee.png)
-
-Run PokerHand.py, where the program prints probabilities of various hands with 7 cards in a hand :-
-![alt code-execution-results-PokerHand-7-input](https://github.com/gmeneze/ase16hxx/blob/master/code/3/.images/PokerHand_7_input.png)
-![alt code-excetion-results-PokerHand-7-result](https://github.com/gmeneze/ase16hxx/blob/master/code/3/.images/PokerHand_7.png)
-
-Run PokerHand.py, where the program prints probabilities of various hands with 5 cards in a hand :-
-![alt code-execution-results-PokerHand-5-input](https://github.com/gmeneze/ase16hxx/blob/master/code/3/.images/PokerHand_5_input.png)
-![alt code-execution-results-PokerHand-5-result](https://github.com/gmeneze/ase16hxx/blob/master/code/3/.images/PokerHand_5.png)
-
-The poker hand probability results obtained here are similar to those mentioned in wikipedia :-
-https://en.wikipedia.org/wiki/Poker_probability
+with kmax = 1000, seed = 100, emax = -1 and s0 = 0 :-
+![alt code-execution-results-SA-schafer-3](https://github.com/gmeneze/ase16hxx/blob/master/code/4/.images/Capture3.png)

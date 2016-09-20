@@ -33,6 +33,7 @@ class SA(object):
 
     @staticmethod
     def __calculate_max_min(iterations):
+        """ Calculate the maximum and minimum of the sum of f1(s) and f2(s) over a range of random values for s """
         arr = []
         for i in xrange(iterations+1):
             # random state
@@ -42,14 +43,22 @@ class SA(object):
         return numpy.amin(arr), numpy.amax(arr)
 
     def p(self, e, en, ratio):
+        """ This is the function p used to determine whether we jump to a '?' value """
+        
+        # Since we start from a high temperature and count down to 0, 
+        # the ratio value needs to be small to give large 'val' for high temperatures and low 'val' for low temperatures
         ratio = 1 - ratio
+
+        # This value is large when ratio is small
         val =  pow(math.e, ((e - en) / ratio))
         return val
 
     def E(self, s):
+        """ This is used to compute the energy at a given state, schaffer_max and schaffer_min are computed at init """
         return ((SA.Schaffer.f1(s) + SA.Schaffer.f2(s)) - self.schaffer_min) / (self.schaffer_max - self.schaffer_min)
 
     def neighbor(self, s, k):
+        """ This method computes the neighbor of s, for high temperatures the jump will be larger and as the temperature becomes low, jumps become smaller"""
         factor = k/self.kmax
         while True:
             s += random.randint(int(SA.Schaffer.lower_bound - s), int(SA.Schaffer.upper_bound - s)) * factor
@@ -58,6 +67,7 @@ class SA(object):
         return s
 
     def minimize(self):
+        """ This method is used to minimize using Schaffer, it implements algorithm explained in problem doc """
             s = self.s0
             e = self.E(s)
             sb = s
@@ -92,11 +102,13 @@ if __name__ == '__main__':
     print(time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime()))
     print("!!! Schaffer")
 
+    # These are the default values of kmax, seed, emax and s0
     kmax = 1000
     seed = 1
     emax = -1
     s0 = 0
 
+    # parameters can also be taken from user input
     if len(sys.argv) >= 2:
         kmax = int(sys.argv[1])
     if len(sys.argv) >= 3:

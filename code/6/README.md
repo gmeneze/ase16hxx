@@ -1,24 +1,29 @@
-# Coding Home Work 3 Submission
+# Coding Home Work 5 Submission
 
-Run SA_schafer.py and provide parameters for kmax, seed, emax and s0 if you wish to use non-default values.
+The threshold value was chosen after running MaxWalkSat with 100 retries and 100 chances with seed = 0,
+threshold = 0.068868980963
+
+How to run?
+Run Osyczka2_MaxWalkSat.py and provide parameters for seed, max_retries and max_chances if you wish to use non-default values.
+The default values are :-
+seed = 1
+max_retries = 1000
+max_chances = 1000
 
 Example:-
-python SA_Schafer.py 1000 1 -1 0
+python Osyczka2_MaxWalkSat.py 1 1000 1000
 
 How to Interpret results? :-
-The initial values of kmax, seed, emax and s0 (initial state) being used by the model are printed before minimization begins.
-This is followed by iterations over values of temperature from 1000 to 0025. In each line - the temperature, the current minimum and the jumps (., ?, !) are printed for 25 iterations, this is same as what is mentioned in the assignment doc :-
-https://github.com/txt/ase16/blob/master/doc/hw4.md
-
-At the end, the best values of state and energy (minimum) denoted by sb and eb are printed.
+The program outputs the values of seed, best solution, threshold value (stated above) and the energy computed using the best solution found. 
+It implements the algorithm specified here:-
+https://github.com/txt/ase16/blob/master/doc/mws.md
 
 Some results :-
+with seed = 100, max_retries = 1000 and max_chances = 1000 :-
+![alt code-execution-results-Osyczka2-MaxWalkSat-1](https://github.com/gmeneze/ase16hxx/blob/master/code/6/.images/capture_1.png)
 
-with kmax = 1000, seed = 1, emax = -1 and s0 = 0 :-
-![alt code-execution-results-SA-schafer-1](https://github.com/gmeneze/ase16hxx/blob/master/code/4/.images/Capture2.png)
+with seed = 1, max_retries = 1000 and max_chances = 1000 :-
+![alt code-execution-results-Osyczka2-MaxWalkSat-2](https://github.com/gmeneze/ase16hxx/blob/master/code/6/.images/capture_2.png)
 
-with kmax = 1000, seed = 10, emax = -1 and s0 = 0 :-
-![alt code-execution-results-SA-schafer-2](https://github.com/gmeneze/ase16hxx/blob/master/code/4/.images/Capture1.png)
-
-with kmax = 1000, seed = 100, emax = -1 and s0 = 0 :-
-![alt code-execution-results-SA-schafer-3](https://github.com/gmeneze/ase16hxx/blob/master/code/4/.images/Capture3.png)
+with seed = 2, max_retries = 1000 and max_chances = 1000 :-
+![alt code-execution-results-Osyczka2-MaxWalkSat-3](https://github.com/gmeneze/ase16hxx/blob/master/code/6/.images/capture_3.png)

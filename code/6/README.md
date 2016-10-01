@@ -19,11 +19,11 @@ It implements the algorithm specified here:-
 https://github.com/txt/ase16/blob/master/doc/mws.md
 
 Some results :-
-with seed = 100, max_retries = 1000 and max_chances = 1000 :-
+with seed = 1, max_retries = 1000 and max_chances = 1000 :-
 ![alt code-execution-results-Osyczka2-MaxWalkSat-1](https://github.com/gmeneze/ase16hxx/blob/master/code/6/.images/capture_1.png)
 
-with seed = 1, max_retries = 1000 and max_chances = 1000 :-
+with seed = 2, max_retries = 1000 and max_chances = 1000 :-
 ![alt code-execution-results-Osyczka2-MaxWalkSat-2](https://github.com/gmeneze/ase16hxx/blob/master/code/6/.images/capture_2.png)
 
-with seed = 2, max_retries = 1000 and max_chances = 1000 :-
+with seed = 100, max_retries = 1000 and max_chances = 1000 :-
 ![alt code-execution-results-Osyczka2-MaxWalkSat-3](https://github.com/gmeneze/ase16hxx/blob/master/code/6/.images/capture_3.png)

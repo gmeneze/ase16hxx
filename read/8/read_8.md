@@ -1,14 +1,14 @@
 ### Paper Review
-Paper: [An Effective Method for Detecting Duplicate Crash Reports Using Crash Traces and Hidden Markov Models]  (http://users.encs.concordia.ca/~abdelw/sba/papers/CASCON16-hmm.pdf)
+Paper: [Parameterizing and Assembling IR-based Solutions for SE Tasks using Genetic Algorithms]  (http://ieeexplore.ieee.org/document/7476653/?arnumber=7476653)
 
 1. *Reading*
-  + 	Ebrahimi, N., Islam, M. S., Hamou-Lhadj, A., & Hamdaqa, M. An Effective Method for Detecting Duplicate Crash Reports Using Crash Traces and Hidden Markov Models.
+  + 	Panichella, A., Dit, B., Oliveto, R., Di Penta, M., Poshyvanyk, D., & De Lucia, A. (2016, March). Parameterizing and Assembling IR-based Solutions for SE Tasks using Genetic Algorithms. In 2016 IEEE 23rd International Conference on Software Analysis, Evolution, and Reengineering (SANER) (Vol. 1, pp. 314-325). IEEE.
 
 2. *Keywords*
   1. **Bug Reports**:Any technical issue that occurs in a software application is described in a bug report by the users encountering the bug. The bug reports are stored in an issue database. There can be multiple bug reports for the same technical issue which leads to duplicate bug reports. The aim of the paper is to identify such duplicate reports.
   2. **Automated Detection**:Whenever a new bug report is issued it should be automatically detected as a duplicate report without any manual intervention.
-  3. **DBTM**: This is the duplicate bug detection approach introduced in this paper. The DBTM approach leverages 2 features namely the text based information retrieval and topic based features to identify the duplicate bug reports describing the similar technical issue/s. 
-  4. **T-Model**: This is the topic model used by the authors of this paper. It is an extension of Latent Dirichlet Analysis (LDA) which represents the topic (technical issues) structure of the bug report and also describes the duplication relations among the bug reports. 
+  3. **Information Retrevial**: This is the duplicate bug detection approach introduced in this paper. The DBTM approach leverages 2 features namely the text based information retrieval and topic based features to identify the duplicate bug reports describing the similar technical issue/s. 
+  4. **Genetic Algorithm**: This is the topic model used by the authors of this paper. It is an extension of Latent Dirichlet Analysis (LDA) which represents the topic (technical issues) structure of the bug report and also describes the duplication relations among the bug reports. 
   5. **BM25F**: This technique is used by the authors to measure textual similarity among the bug reports. BM25F measures the global (shared technical issue) importance and local (technical issue constrained to that bug report) importance of every word that appears in the bug report. 
 
 3. *Notes (4 of 19)*

@@ -1,5 +1,6 @@
+import sys
 from Problem import *
-
+sys.dont_write_bytecode = True
 class Osyczka2(Problem):
     def __init__(self):
         """

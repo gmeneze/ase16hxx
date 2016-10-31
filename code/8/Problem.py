@@ -1,8 +1,8 @@
 #! /usr/bin/python
 
-import random, sys
-import copy, math, sys
+import random, sys, math
 
+sys.dont_write_bytecode = True
 
 def shuffle(lst):
     """
@@ -13,11 +13,11 @@ def shuffle(lst):
 
 
 def display(lst):
-  """
-  Print whithout going to new line
-  """
-  print lst,
-  sys.stdout.flush()
+    """
+    Print whithout going to new line
+    """
+    print lst,
+    sys.stdout.flush()
 
 
 class Object:

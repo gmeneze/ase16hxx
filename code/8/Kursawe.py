@@ -1,4 +1,7 @@
+import sys
 from Problem import *
+
+sys.dont_write_bytecode = True
 
 class Kursawe(Problem):
     def __init__(self):

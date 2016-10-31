@@ -1,5 +1,6 @@
+import sys
 from Problem import *
-
+sys.dont_write_bytecode = True
 class Schaffer(Problem):
     def __init__(self):
         """

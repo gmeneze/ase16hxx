@@ -1,7 +1,8 @@
+import sys
 from Schaffer import *
 from Osyczka2 import *
 from Kursawe import *
-
+sys.dont_write_bytecode = True
 epsilon = 0.001
 
 class Maxwalksat(object):

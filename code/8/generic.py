@@ -1,8 +1,11 @@
 from Schaffer import *
-#from Osyczka2 import *
-#from Kursawe import *
+from Osyczka2 import *
+from Kursawe import *
 from SA import *
 from Maxwalksat import *
+import sys
+
+sys.dont_write_bytecode = True
 
 sa = SA()
 mws = Maxwalksat()

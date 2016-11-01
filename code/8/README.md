@@ -15,6 +15,7 @@ How to Interpret results? :-
 The program outputs the result for Schaffer, Osyczka and Kursawe models using Simulated Annealing and MaxWalkSat optimization methods
 
 Some results :-
+
 ![alt code-execution-results-SA-Schaffer](https://github.com/gmeneze/ase16hxx/blob/master/code/8/.images/capture_1.png)
 ![alt code-execution-results-MWS-Schaffer](https://github.com/gmeneze/ase16hxx/blob/master/code/8/.images/capture_2.png)
 ![alt code-execution-results-SA-Osyczka](https://github.com/gmeneze/ase16hxx/blob/master/code/8/.images/capture_3.png)

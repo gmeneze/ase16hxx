@@ -1,7 +1,5 @@
 #! /usr/bin/python
-
 import random, sys, math
-
 sys.dont_write_bytecode = True
 
 def shuffle(lst):
@@ -24,7 +22,6 @@ class Object:
     """
     Object class
     """
-
     def __init__(self, **kwargs):
         self.has().update(**kwargs)
 
@@ -34,16 +31,6 @@ class Object:
     def update(self, **kwargs):
         self.has().update(kwargs)
         return self
-
-    def __repr__(self):
-        show = [':%s %s' % (k, self.has()[k])
-                for k in sorted(self.has().keys())
-                if k[0] is not "_"]
-        txt = ' '.join(show)
-        if len(txt) > 60:
-            show = map(lambda x: '\t' + x + '\n', show)
-        return '{' + ' '.join(show) + '}'
-
 
 class Decision(Object):
     """
@@ -91,15 +78,7 @@ class Problem(Object):
         self.decisions = decisions
         self.objectives = objectives
 
-    @staticmethod
-    def eval(point):
-        return point.objectives
-
-    @staticmethod
-    def ok(self, point):
-        return True
-
-    def any(self, retries=500):
+    def any(self, model, retries=500):
         for _ in xrange(retries):
             point = Point([random.randint(int(d.low), d.high) for d in self.decisions])
             if self.ok(self, point):

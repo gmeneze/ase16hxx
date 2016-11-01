@@ -10,7 +10,7 @@ class Maxwalksat(object):
         """
         MaxWalkSat Optimization method
         """
-        best = model.any()
+        best = model.any(model)
         def change_decision(point, c):
             """
             Randomly change a point and return the point if valid
@@ -47,7 +47,7 @@ class Maxwalksat(object):
             return bestpoint
 
         for i in xrange(max_tries):
-            anymodel = model.any()
+            anymodel = model.any(model)
             display(format(best.energy, '12d'))
             display(format(anymodel.energy, '12d'))
             display('')

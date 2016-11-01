@@ -68,33 +68,34 @@ class SA(object):
 
     def minimize(self):
         """ This method is used to minimize using Schaffer, it implements algorithm explained in problem doc """
-            s = self.s0
-            e = self.E(s)
-            sb = s
-            eb = e
-            k = self.kmax
+        s = self.s0
+        e = self.E(s)
+        sb = s
+        eb = e
+        k = self.kmax
 
-            while k > 0 and e > self.emax:
-                sn = self.neighbor(s, k)
-                en = self.E(sn)
+        while k > 0 and e > self.emax:
+			sn = self.neighbor(s, k)
+			en = self.E(sn)
+			
+			if k % 25 == 0: print("\n%04d, %3.2f, " % (k, eb), end="")
 
-                if k % 25 == 0: print("\n%04d, %3.2f, " % (k, eb), end="")
-
-                if en < eb:
-                    sb = sn
-                    eb = en
-                    print("!", end="")
-                elif en < e:
-                    s = sn
-                    e = en
-                    print("+", end="")
-                elif self.p(e, en, k/self.kmax) < random.random():
-                    s = sn
-                    e = en
-                    print("?", end="")
-                print(".", end="")
-                k = k-1
-            return sb, eb
+			if en < eb:
+				sb = sn
+				eb = en
+				print("!", end="")
+			elif en < e:
+				s = sn
+				e = en
+				print("+", end="")
+			elif self.p(e, en, k/self.kmax) < random.random():
+				s = sn
+				e = en
+				print("?", end="")
+			print(".", end="")
+			k = k-1
+			
+        return sb,eb
 
 
 if __name__ == '__main__':

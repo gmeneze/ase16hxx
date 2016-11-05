@@ -22,19 +22,21 @@ class Problem(object):
         self.drawer = Drawer()
         self.nodelist = []
         self.vehicle = []
-        self.routelist = []
         self.num_of_nodes = num_of_nodes
         self.num_of_vehicles = num_of_vehicles
-        self.cost_matrix = [[0]*num_of_nodes]*num_of_nodes
+        self.cost_matrix = [[0 for _ in xrange(num_of_nodes)] for _ in xrange(num_of_nodes)]
         self.objectives = []
         self.decisions = []
+        self.generate_nodes()
+        self.generate_vehicles()
+        self.generate_cost_matrix()
     
     def generate_nodes(self):
         """
         generate nodes randomly
         """
         for i in range(self.num_of_nodes):
-            self.nodelist.append(Node(i, random.randint(self.drawer.window_length, self.drawer.window_height))
+            self.nodelist.append(Node(i, random.randint(0, self.drawer.window_length), random.randint(0, self.drawer.window_height)))
         
     
     def generate_vehicles(self):
@@ -50,10 +52,11 @@ class Problem(object):
         """
         generate costs randomly
         """
-        for i in xrange(num_of_nodes):
-            for j in xrange(i+1, num_of_nodes):
-                route = Route(nodelist[i], nodelist[j])
-                self.cost_matrix[i][j] = self.cost_matrix[j][i] = route.distance * route.cost_factor
+        for i in xrange(self.num_of_nodes):
+            for j in xrange(i+1, self.num_of_nodes):
+                route = Route(self.nodelist[i], self.nodelist[j])
+                self.cost_matrix[j][i] = self.cost_matrix[i][j] = route.distance * route.cost_factor
+
                 
     
     def determine_route(self):
@@ -63,4 +66,10 @@ class Problem(object):
         """
     
     
+newProblem = Problem(5,1)
+for n in newProblem.nodelist:
+    print(n.id, n.xcordinate, n.ycordinate)
+for v in newProblem.vehicle:
+    print(v.v_id, v.x, v.y)
+print(newProblem.cost_matrix)
 

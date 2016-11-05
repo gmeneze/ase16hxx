@@ -28,6 +28,6 @@ class Route(object):
         return self.distance
     
     def get_cost(self):
-        return self.cost
+        return self.distance * self.cost_factor
     
     

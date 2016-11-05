@@ -55,7 +55,7 @@ class Problem(object):
         for i in xrange(self.num_of_nodes):
             for j in xrange(i+1, self.num_of_nodes):
                 route = Route(self.nodelist[i], self.nodelist[j])
-                self.cost_matrix[j][i] = self.cost_matrix[i][j] = route.distance * route.cost_factor
+                self.cost_matrix[j][i] = self.cost_matrix[i][j] = route.get_cost()
 
                 
     

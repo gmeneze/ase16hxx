@@ -26,6 +26,8 @@ class Problem(object):
         self.num_of_nodes = num_of_nodes
         self.num_of_vehicles = num_of_vehicles
         self.cost_matrix = [[0]*num_of_nodes]*num_of_nodes
+        self.objectives = []
+        self.decisions = []
     
     def generate_nodes(self):
         """

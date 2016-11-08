@@ -14,6 +14,8 @@ from Vehicle import Vehicle
 from Algorithm import Algorithm
 from Drawer import Drawer
 from Route import Route
+from TSP import TSP
+import numpy as np
 import sys,re,traceback,random, operator, string, time
 sys.dont_write_bytecode=True
 
@@ -57,19 +59,19 @@ class Problem(object):
                 route = Route(self.nodelist[i], self.nodelist[j])
                 self.cost_matrix[j][i] = self.cost_matrix[i][j] = route.get_cost()
 
-                
+
     
-    def determine_route(self):
-        """
-        iterate over vehicle list and 
-        generate optimal route per vehicle
-        """
-    
-    
-newProblem = Problem(5,1)
+newProblem = Problem(3,1)
 for n in newProblem.nodelist:
     print(n.id, n.xcordinate, n.ycordinate)
 for v in newProblem.vehicle:
     print(v.v_id, v.x, v.y)
 print(newProblem.cost_matrix)
+current_soln = list(range(0, newProblem.num_of_nodes))
+current_soln.append(0)
+print(current_soln)
+#print(newProblem.determine_cost(current_soln))
+tsp = TSP(newProblem.cost_matrix, current_soln, 10, 10, newProblem.num_of_nodes)
+tsp.solve_tabu()
+
 

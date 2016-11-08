@@ -1,4 +1,4 @@
-from graphics import *
+from Graphics import *
 class Drawer(object):
     def __init__(self):
         self.window_height = 1400

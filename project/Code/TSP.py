@@ -1,4 +1,4 @@
-import numpy as np
+#import numpy as np
 import copy
 class TSP(object):
     def __init__(self, cost_matrix, initial_solution, num_iterations, tabu_len, num_of_nodes):

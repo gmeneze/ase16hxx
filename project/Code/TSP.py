@@ -1,4 +1,5 @@
 import numpy as np
+import copy
 class TSP(object):
     def __init__(self, cost_matrix, initial_solution, num_iterations, tabu_len, num_of_nodes):
         self.cost_matrix = cost_matrix
@@ -6,7 +7,7 @@ class TSP(object):
         self.num_iterations = num_iterations
         self.num_of_nodes = num_of_nodes
         self.tabu_len = tabu_len
-        self.tabu_list = [[0 for _ in xrange(num_of_nodes)] for _ in xrange(num_of_nodes)]
+        self.tabu_list = [[0 for _ in range(num_of_nodes)] for _ in range(num_of_nodes)]
         self.cost = self.determine_cost(self.current_solution)
         self.best_solution = initial_solution
         self.best_cost = self.cost
@@ -60,22 +61,26 @@ class TSP(object):
     def solve_tabu(self):
         #self.best_cost = self.cost
         #self.best_solution = self.current_solution
-        print "Initial"
-        print self.best_solution
-        print self.best_cost
+        print("Initial")
+        print(self.best_solution)
+        print(self.best_cost)
         for i in range(self.num_iterations):
             self.get_next_solution()
-            print "Current Soln:"+str(self.current_solution)
+            print("Current Soln: %s", str(self.current_solution))
+            #print "==Best Soln Before:"+ str(self.best_solution)
             self.cost = self.determine_cost(self.current_solution)
-            print "Current Cost:" + str(self.cost)
+            #print "==Best Soln After:"+ str(self.best_solution)
+            print("Current Cost:", str(self.cost))
             if self.cost < self.best_cost:
                 self.best_cost = self.cost
-                self.best_solution = self.current_solution
-                print "Best Soln:"+ str(self.best_solution)
-                print "Best Cost:"+ str(self.best_cost)
-        print "final Soln:"
-        print self.best_solution
-        print self.best_cost
+                print("Updating best Solution")
+                self.best_solution = copy.deepcopy(self.current_solution)
+                print("Best Soln: %s", str(self.best_solution))
+                print("Best Cost: %s", str(self.best_cost))
+        print("final Soln:")
+        print(self.best_solution)
+        #print self.current_solution
+        print(self.best_cost)
 
 
 

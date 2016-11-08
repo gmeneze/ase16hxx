@@ -26,7 +26,7 @@ class Problem(object):
         self.vehicle = []
         self.num_of_nodes = num_of_nodes
         self.num_of_vehicles = num_of_vehicles
-        self.cost_matrix = [[0 for _ in xrange(num_of_nodes)] for _ in xrange(num_of_nodes)]
+        self.cost_matrix = [[0 for _ in range(num_of_nodes)] for _ in range(num_of_nodes)]
         self.objectives = []
         self.decisions = []
         self.generate_nodes()
@@ -54,8 +54,8 @@ class Problem(object):
         """
         generate costs randomly
         """
-        for i in xrange(self.num_of_nodes):
-            for j in xrange(i+1, self.num_of_nodes):
+        for i in range(self.num_of_nodes):
+            for j in range(i+1, self.num_of_nodes):
                 route = Route(self.nodelist[i], self.nodelist[j])
                 self.cost_matrix[j][i] = self.cost_matrix[i][j] = route.get_cost()
 

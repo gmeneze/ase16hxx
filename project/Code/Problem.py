@@ -61,7 +61,7 @@ class Problem(object):
 
 
     
-newProblem = Problem(3,1)
+newProblem = Problem(10,1)
 for n in newProblem.nodelist:
     print(n.id, n.xcordinate, n.ycordinate)
 for v in newProblem.vehicle:

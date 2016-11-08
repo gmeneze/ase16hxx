@@ -81,6 +81,7 @@ class TSP(object):
         print(self.best_solution)
         #print self.current_solution
         print(self.best_cost)
+        return self.best_solution
 
 
 

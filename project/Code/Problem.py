@@ -72,6 +72,6 @@ current_soln.append(0)
 print(current_soln)
 #print(newProblem.determine_cost(current_soln))
 tsp = TSP(newProblem.cost_matrix, current_soln, 10, 10, newProblem.num_of_nodes)
-tsp.solve_tabu()
-
+best_solution = tsp.solve_tabu()
+Drawer.draw_path(newProblem.nodelist,best_solution)
 

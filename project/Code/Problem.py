@@ -33,6 +33,7 @@ class Problem(object):
         self.generate_nodes()
         self.generate_vehicles()
         self.generate_cost_matrix()
+        self.generate_speed_matrix()
     
     def generate_nodes(self):
         """
@@ -69,21 +70,30 @@ class Problem(object):
                 if i == j:
                     self.speed_matrix[i][j] = 0
                 else: 
-                    route = Route(self.nodelist[i], self.nodelist[j])
-                    self.speed_matrix[i][j] = route.get_speed()
-    
-newProblem = Problem(10,1)
-for n in newProblem.nodelist:
-    print(n.id, n.xcordinate, n.ycordinate)
-for v in newProblem.vehicle:
-    print(v.v_id, v.x, v.y)
-print(newProblem.cost_matrix)
-current_soln = list(range(0, newProblem.num_of_nodes))
-current_soln.append(0)
-print(current_soln)
+                    #route = Route(self.nodelist[i], self.nodelist[j])
+                    self.speed_matrix[i][j] = random.randint(20, 100)
+for i in range(10):
+    newProblem = Problem(10,1)
+    #for n in newProblem.nodelist:
+        #print(n.id, n.xcordinate, n.ycordinate)
+    #for v in newProblem.vehicle:
+        #print(v.v_id, v.x, v.y)
+    #print(newProblem.cost_matrix)
+    #print(newProblem.speed_matrix)
+    current_soln = list(range(0, newProblem.num_of_nodes))
+    current_soln.append(0)
+    #print(current_soln)
 #print(newProblem.determine_cost(current_soln))
-tsp = TSP(newProblem.cost_matrix, current_soln, 10, 10, newProblem.num_of_nodes)
-best_solution = tsp.solve_tabu()
-drawer = Drawer()
-drawer.draw_path(newProblem.nodelist,best_solution)
+    print("Iteration"+str(i))
+    print("Optimizing Distance")
+    tsp = TSP(newProblem.cost_matrix, newProblem.speed_matrix, current_soln, 10, 10, newProblem.num_of_nodes,1)
+    best_solution = tsp.solve_tabu()
+    #drawer = Drawer()
+    #drawer.draw_path(newProblem.nodelist,best_solution)
+    print("Optimizing Time")
+    tsp = TSP(newProblem.cost_matrix, newProblem.speed_matrix, current_soln, 10, 10, newProblem.num_of_nodes,2)
+    best_solution = tsp.solve_tabu()
+    print("-------------------------------------------------------------------------------------------")
+#drawer = Drawer()
+#drawer.draw_path(newProblem.nodelist,best_solution)
 

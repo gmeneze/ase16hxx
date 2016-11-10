@@ -27,6 +27,7 @@ class Problem(object):
         self.num_of_nodes = num_of_nodes
         self.num_of_vehicles = num_of_vehicles
         self.cost_matrix = [[0 for _ in range(num_of_nodes)] for _ in range(num_of_nodes)]
+        self.speed_matrix = [[0 for _ in range(num_of_nodes)] for _ in range(num_of_nodes)]
         self.objectives = []
         self.decisions = []
         self.generate_nodes()
@@ -57,9 +58,19 @@ class Problem(object):
         for i in range(self.num_of_nodes):
             for j in range(i+1, self.num_of_nodes):
                 route = Route(self.nodelist[i], self.nodelist[j])
-                self.cost_matrix[j][i] = self.cost_matrix[i][j] = route.get_cost()
+                self.cost_matrix[j][i] = self.cost_matrix[i][j] = route.get_distance()
 
-
+    def generate_speed_matrix(self):
+        """
+        generate speeds randomly
+        """
+        for i in range(self.num_of_nodes):
+            for j in range(self.num_of_nodes):
+                if i == j:
+                    self.speed_matrix[i][j] = 0
+                else: 
+                    route = Route(self.nodelist[i], self.nodelist[j])
+                    self.speed_matrix[i][j] = route.get_speed()
     
 newProblem = Problem(10,1)
 for n in newProblem.nodelist:

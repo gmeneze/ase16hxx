@@ -22,6 +22,7 @@ class Route(object):
         self.end_node = end_node
         self.cost_factor = random.randint(1, 3)
         self.distance = self.get_distance()
+        self.speed_limit = self.get_speed_limit()
         
     def get_distance(self):
         self.distance = ((abs(self.start_node.xcordinate - self.end_node.xcordinate))**2 + (abs(self.start_node.ycordinate - self.end_node.ycordinate)) ** 2) ** 0.5
@@ -29,5 +30,8 @@ class Route(object):
     
     def get_cost(self):
         return self.distance * self.cost_factor
+        
+    def get_speed(self):
+        self.
     
     

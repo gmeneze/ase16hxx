@@ -15,7 +15,7 @@ from Algorithm import Algorithm
 from Drawer import Drawer
 from Route import Route
 from TSP import TSP
-import numpy as np
+#import numpy as np
 import sys,re,traceback,random, operator, string, time
 sys.dont_write_bytecode=True
 
@@ -84,5 +84,6 @@ print(current_soln)
 #print(newProblem.determine_cost(current_soln))
 tsp = TSP(newProblem.cost_matrix, current_soln, 10, 10, newProblem.num_of_nodes)
 best_solution = tsp.solve_tabu()
-Drawer.draw_path(newProblem.nodelist,best_solution)
+drawer = Drawer()
+drawer.draw_path(newProblem.nodelist,best_solution)
 

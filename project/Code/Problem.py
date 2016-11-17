@@ -72,8 +72,13 @@ class Problem(object):
                 else: 
                     #route = Route(self.nodelist[i], self.nodelist[j])
                     self.speed_matrix[i][j] = random.randint(20, 100)
+
 for i in range(10):
+<<<<<<< HEAD
     newProblem = Problem(10,3)
+=======
+    newProblem = Problem(30,1)
+>>>>>>> 8431a38eb4139e320b5f30cae2ae87a59a8bab8f
     #for n in newProblem.nodelist:
         #print(n.id, n.xcordinate, n.ycordinate)
     #for v in newProblem.vehicle:
@@ -85,15 +90,22 @@ for i in range(10):
     #print(current_soln)
 #print(newProblem.determine_cost(current_soln))
     print("Iteration"+str(i))
-    print("Optimizing Distance")
-    tsp = TSP(newProblem.cost_matrix, newProblem.speed_matrix, current_soln, 10, 10, newProblem.num_of_nodes,1)
-    best_solution = tsp.solve_tabu()
-    #drawer = Drawer()
-    #drawer.draw_path(newProblem.nodelist,best_solution)
-    print("Optimizing Time")
-    tsp = TSP(newProblem.cost_matrix, newProblem.speed_matrix, current_soln, 10, 10, newProblem.num_of_nodes,2)
-    best_solution = tsp.solve_tabu()
-    print("-------------------------------------------------------------------------------------------")
-#drawer = Drawer()
-#drawer.draw_path(newProblem.nodelist,best_solution)
+    for iterations in range(10,100,10):
+        print("IterationSize = "+str(iterations))
+        for tabulen in range(10,100,10):
+            print("Tabu List Length = " + str(tabulen))
+            print("Optimizing Distance")
+            tsp = TSP(newProblem.cost_matrix, newProblem.speed_matrix, current_soln, 10, 10, newProblem.num_of_nodes,1)
+            best_solution = tsp.solve_tabu()
+            #drawer = Drawer()
+            #drawer.draw_path(newProblem.nodelist,best_solution)
+            print("Optimizing Time")
+            tsp = TSP(newProblem.cost_matrix, newProblem.speed_matrix, current_soln, 10, 10, newProblem.num_of_nodes,2)
+            best_solution = tsp.solve_tabu()
+            print("-----------------------------------------Solution--------------------------------------------------")
+            #drawer = Drawer()
+            #drawer.draw_path(newProblem.nodelist,best_solution)
+        print("-------------------------------------------------------TabuLen------------------------------------")
+    print("----------------------------------------------------Inner Iteration------------------------------------")
+print("------------------------------------------------------Outer Iteration----------------------------------------")
 

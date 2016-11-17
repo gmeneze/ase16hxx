@@ -73,7 +73,7 @@ class Problem(object):
                     #route = Route(self.nodelist[i], self.nodelist[j])
                     self.speed_matrix[i][j] = random.randint(20, 100)
 for i in range(10):
-    newProblem = Problem(10,1)
+    newProblem = Problem(10,3)
     #for n in newProblem.nodelist:
         #print(n.id, n.xcordinate, n.ycordinate)
     #for v in newProblem.vehicle:

@@ -13,6 +13,7 @@ class TSP(object):
         self.metric = metric
         self.cost = self.determine_cost(self.current_solution)
         self.best_cost = self.cost
+    
     def determine_cost(self, solution):
         """
         iterate over route and
@@ -121,7 +122,3 @@ class TSP(object):
         print("Time")
         print(self.get_totaltime(self.best_solution))
         return self.best_solution
-
-
-
-

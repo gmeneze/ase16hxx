@@ -16,6 +16,7 @@ from Drawer import Drawer
 from Route import Route
 from TSP import TSP
 #import numpy as np
+from random import *
 import sys,re,traceback,random, operator, string, time
 sys.dont_write_bytecode=True
 
@@ -40,7 +41,7 @@ class Problem(object):
         generate nodes randomly
         """
         for i in range(self.num_of_nodes):
-            self.nodelist.append(Node(i, random.randint(0, self.drawer.window_length), random.randint(0, self.drawer.window_height)))
+            self.nodelist.append(Node(i, random.randint(0, self.drawer.window_length), random.randint(0, self.drawer.window_height), randint(1,5)))
         
     
     def generate_vehicles(self):
@@ -74,16 +75,12 @@ class Problem(object):
                     self.speed_matrix[i][j] = random.randint(20, 100)
 
 for i in range(10):
-<<<<<<< HEAD
-    newProblem = Problem(10,3)
-=======
     newProblem = Problem(30,1)
->>>>>>> 8431a38eb4139e320b5f30cae2ae87a59a8bab8f
     #for n in newProblem.nodelist:
         #print(n.id, n.xcordinate, n.ycordinate)
     #for v in newProblem.vehicle:
         #print(v.v_id, v.x, v.y)
-    #print(newProblem.cost_matrix)
+    #print(newProblem.cost_matrix)40
     #print(newProblem.speed_matrix)
     current_soln = list(range(0, newProblem.num_of_nodes))
     current_soln.append(0)

@@ -1,11 +1,13 @@
 from random import *
 from Solution import Solution
+import math
 
 class GA(object):
-    def __init__(self, cost_matrix, speed_matrix, iterations = 0, currentSolution = [], bestSolution = [], 
+    def __init__(self, problem, iterations = 10, currentSolution = [], bestSolution = [],
                         bestFitness = 0, population = [], mutationRate = 0.2):
-        self.cost_matrix = cost_matrix
-        self.speed_matrix = speed_matrix
+        self.problem = problem
+        self.cost_matrix = problem.cost_matrix
+        self.speed_matrix = problem.speed_matrix
         self.iterations = iterations
         self.currentSolution = currentSolution
         self.bestSolution = bestSolution
@@ -14,11 +16,11 @@ class GA(object):
         self.mutationRate = mutationRate
         
     def generate_population(self, nodelist, num = 10):
-        self.population = [self.generate_one_solution(nodelist) for _ in num]
+        self.population = [self.generate_one_solution(nodelist) for _ in range(num)]
                 
                 
     def generate_one_solution(self, nodelist):
-        i = randint(0,len(nodelist))
+        i = randint(0,len(nodelist) - 1)
         included = []
         path = []
         start = i
@@ -29,10 +31,10 @@ class GA(object):
                 if len(included) == len(nodelist):
                     path.append(nodelist[start])
                     break
-            i = (i + int(random()))%len(nodelist)
+            i = (i + int(randint(0,len(nodelist))))%len(nodelist)
         solution = Solution(path)
-        solution.distance = 0
-        solution.time = 0
+        solution.distance = self.get_totaldistance(path)
+        solution.time, solution.satisfaction = self.get_totaltime(path)
         return solution
         
     def get_totaldistance(self, solution):
@@ -41,42 +43,69 @@ class GA(object):
         # print solution
         # print solution.__len__()
         for i in range(solution.__len__() - 1):
-            j = solution[i]
-            k = solution[i + 1]
+            j = solution[i].id
+            k = solution[i + 1].id
              # print j , k
             cost += self.cost_matrix[j][k]
         return cost
 
     def get_totaltime(self,solution):
-        cost = 0
+        time = 0
+        satisfaction = 0
+        print solution
         for i in range(solution.__len__() - 1):
-            j = solution[i]
-            k = solution[i + 1]
-            # print j , k
-            cost += self.cost_matrix[j][k] / self.speed_matrix[j][k]
-            # print cost
+            j = solution[i].id
+            k = solution[i + 1].id
+            print j , k
+            time += self.cost_matrix[j][k] / self.speed_matrix[j][k]
+            if time < solution[i].latestReach:
+                satisfaction += solution[i].satisfaction
+            time += solution[i+1].duration
+            print time
             # print 'end cost'
-        return cost
+        return time, satisfaction
                     
     
     def cdom(self, node1, node2, rev = False):
+        x = [node1.distance, node1.time, node1.satisfaction]
+        y = [node2.distance, node2.time, node2.satisfaction]
+
+        def w(better):
+            return -1 if better == less else 1
+
+        def expLoss(w, x1, y1, n):
+            return -1 * math.e ** (w * (x1 - y1) / n)
+
+        def loss(x, y):
+            losses = []
+            n = min(len(x), len(y))
+            for obj in x:
+                x1, y1 = x[obj.pos], y[obj.pos]
+                x1, y1 = obj.norm(x1), obj.norm(y1)
+                losses += [expLoss(w(obj.want), x1, y1, n)]
+            return sum(losses) / n
+
+        l1 = loss(x, y)
+        l2 = loss(y, x)
+
+        response = l1 < l2
         if rev:
-            return node1
+            return not response
         else:
-            return node2
+            return response
         
     def crossover(self, mom, dad):
-        start = randint(0,len(mom))
-        end = randint(0,len(mom))
+        start = randint(0,len(mom.path)-2)
+        end = randint(0,len(mom.path)-2)
         child = []
         if start > end:
             start, end = end, start
         for i in xrange(start, end + 1):
-            child.append(mom[i])
-        for i in xrange(len(dad)):
-            if dad[i] not in child:
-                child.append(dad[i])
-        child.append(mom[start])
+            child.append(mom.path[i])
+        for i in xrange(len(dad.path)):
+            if dad.path[i] not in child:
+                child.append(dad.path[i])
+        child.append(mom.path[start])
         return child
     
     def mutate(self, child):
@@ -89,20 +118,38 @@ class GA(object):
     def getfittest(self, population):
         best = population[0]
         for p in population:
-            best = self.cdom(best, p)
+            if self.cdom(p, best):
+                best = p
         return best
         
     def getweakest(self, population):
         weak = population[0]
         for p in population:
-            weak = self.cdom(weak, p, True)
+            if self.cdom(weak, p):
+                weak = p
         return weak
         
     def evolve(self, population):
-        mom = population.remove(self.getfittest(population))
-        dad = population.remove(self.getfittest(population))
+        mom = self.getfittest(population)
+        population.remove(mom)
+        dad = self.getfittest(population)
+        population.remove(dad)
         child = self.crossover(mom, dad)
-        population.remove(self.getweakest(population))
-        population.append(mom)
-        population.append(dad)
-        population.append(child)
+        dist = self.get_totaldistance(child)
+        time= self.get_totaltime(child)
+        childSolution = Solution(child,dist,time)
+        weak = self.getweakest(population)
+        if self.cdom(childSolution, weak):
+            population.remove(weak)
+            population.append(mom)
+            population.append(dad)
+            population.append(childSolution)
+
+
+    def solve(self, nodelist):
+        self.generate_population(nodelist)
+        for _ in range(self.iterations):
+            self.evolve(self.population)
+        for i in (self.getfittest(self.population).path):
+            print i.id,
+        print ""

@@ -14,11 +14,15 @@ from Vehicle import Vehicle
 from Algorithm import Algorithm
 from Drawer import Drawer
 from Route import Route
+from GA import GA
 from TSP import TSP
+from Objective import Objective
 #import numpy as np
 from random import *
 import sys,re,traceback,random, operator, string, time
+import datetime
 sys.dont_write_bytecode=True
+
 
 class Problem(object):
     def __init__(self, num_of_nodes, num_of_vehicles):
@@ -40,8 +44,12 @@ class Problem(object):
         """
         generate nodes randomly
         """
+        maxdays = self.num_of_nodes / 2
         for i in range(self.num_of_nodes):
-            self.nodelist.append(Node(i, random.randint(0, self.drawer.window_length), random.randint(0, self.drawer.window_height), randint(1,5)))
+            day = randint(1,maxdays)
+            time = 24 * day + 20
+            self.nodelist.append(Node(i, random.randint(0, self.drawer.window_length),
+                                      random.randint(0, self.drawer.window_height), randint(1,5), time, randint(1,5)))
         
     
     def generate_vehicles(self):
@@ -87,9 +95,9 @@ for i in range(10):
     #print(current_soln)
 #print(newProblem.determine_cost(current_soln))
     print("Iteration"+str(i))
-    for iterations in range(10,100,10):
+    for iterations in range(10,10,10):
         print("IterationSize = "+str(iterations))
-        for tabulen in range(10,100,10):
+        for tabulen in range(10,30,10):
             print("Tabu List Length = " + str(tabulen))
             print("Optimizing Distance")
             tsp = TSP(newProblem.cost_matrix, newProblem.speed_matrix, current_soln, 10, 10, newProblem.num_of_nodes,1)
@@ -106,3 +114,10 @@ for i in range(10):
     print("----------------------------------------------------Inner Iteration------------------------------------")
 print("------------------------------------------------------Outer Iteration----------------------------------------")
 
+
+newProblem = Problem(30,1)
+newProblem.objectives.append(Objective("distance"))
+newProblem.objectives.append(Objective("time"))
+newProblem.objectives.append(Objective("satisfaction",False))
+ga = GA(newProblem, 10)
+ga.solve(newProblem.nodelist)

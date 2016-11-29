@@ -17,10 +17,12 @@ from Route import Route
 from GA import GA
 from TSP import TSP
 from Objective import Objective
+from NSGA import NSGA
+from NSGA2 import NSGA2
 #import numpy as np
 from random import *
 import sys,re,traceback,random, operator, string, time
-import datetime
+import deap
 sys.dont_write_bytecode=True
 
 
@@ -39,6 +41,12 @@ class Problem(object):
         self.generate_vehicles()
         self.generate_cost_matrix()
         self.generate_speed_matrix()
+
+    def __repr__(self):
+        print (self.nodelist)
+        print (self.cost_matrix)
+        print (self.speed_matrix)
+
     
     def generate_nodes(self):
         """
@@ -82,6 +90,8 @@ class Problem(object):
                     #route = Route(self.nodelist[i], self.nodelist[j])
                     self.speed_matrix[i][j] = random.randint(20, 100)
 
+
+"""
 for i in range(10):
     newProblem = Problem(30,1)
     #for n in newProblem.nodelist:
@@ -93,7 +103,7 @@ for i in range(10):
     current_soln = list(range(0, newProblem.num_of_nodes))
     current_soln.append(0)
     #print(current_soln)
-#print(newProblem.determine_cost(current_soln))
+    #print(newProblem.determine_cost(current_soln))
     print("Iteration"+str(i))
     for iterations in range(10,10,10):
         print("IterationSize = "+str(iterations))
@@ -113,11 +123,31 @@ for i in range(10):
         print("-------------------------------------------------------TabuLen------------------------------------")
     print("----------------------------------------------------Inner Iteration------------------------------------")
 print("------------------------------------------------------Outer Iteration----------------------------------------")
+"""
 
 
 newProblem = Problem(30,1)
 newProblem.objectives.append(Objective("distance"))
 newProblem.objectives.append(Objective("time"))
-newProblem.objectives.append(Objective("satisfaction",False))
-ga = GA(newProblem, 10)
+newProblem.objectives.append(Objective("satisfaction", None ,False))
+newProblem.__repr__()
+"""
+ga = GA(newProblem, "cdom")
 ga.solve(newProblem.nodelist)
+
+
+nsga = NSGA(newProblem)
+nsga.main(10)
+"""
+
+nsga = NSGA2(newProblem)
+population = nsga.main()
+mini = 1000000
+ind = None
+for i in population[0]:
+    print (i.fitness.values[0], i.fitness.values[1], i.fitness.values[2])
+    if i.fitness.values[0] < mini:
+        mini = i.fitness.values[0]
+        ind = i
+print (ind)
+print (ind.fitness.values[0], ind.fitness.values[1], ind.fitness.values[2])

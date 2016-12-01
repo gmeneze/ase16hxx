@@ -193,6 +193,20 @@ class Problem(object):
         dist_euclid = ((values1[0] - values2[0]) ** 2 + (values1[1] - values2[1]) ** 2 + (
                 values1[2] - values2[2]) ** 2) ** 0.5
         return dist_euclid
+        
+    def closest(self,one,many):
+        min_dist = float("inf")
+        closest_point = None
+        for this in many:
+            dist = self.euclid(this, one)
+            if dist < min_dist:
+                min_dist = dist
+                closest_point = this
+        return min_dist, closest_point
+        
+    def igd(self,obtained, ideals):
+        igd_val = sum([self.closest(ideal,obtained)[0] for ideal in ideals])/len(ideals)
+        return igd_val
 
     def spread(self, pareto_soln):
         n = len(pareto_soln)
@@ -335,13 +349,21 @@ print ("SPEA CDOM Spread")
 print(spread_val)
 
 
+commpareto.append([(sol.distance.value, sol.time.value, sol.satisfaction.value) for sol in gabpareto])
+commpareto.append([(sol.distance.value, sol.time.value, sol.satisfaction.value) for sol in gacpareto])
+commpareto.append([sol.fitness.values for sol in nsgabpareto])
+commpareto.append([sol.fitness.values for sol in nsgacpareto])
+commpareto.append([sol.fitness.values for sol in speabpareto])
+commpareto.append([sol.fitness.values for sol in speacpareto])
 
-commpareto.append(gabpareto)
-commpareto.append(gacpareto)
-commpareto.append(nsgabpareto)
-commpareto.append(nsgacpareto)
-commpareto.append(speabpareto)
-commpareto.append(speacpareto)
+
+ideal_pareto = newProblem.normalize(compareto)
+#ideal_sorted = newProblem.sortlist(ideal_pareto)
+obtain_pareto = newProblem.normalize(nsgabpareto)
+#obtain_sorted = newProblem.sortlist(obtain_pareto)
+igd_val = newProblem.igd(ideal_pareto,obtain_pareto)
+print(igd_val)
+
 
 """
 ga = GA(newProblem, "cdom")

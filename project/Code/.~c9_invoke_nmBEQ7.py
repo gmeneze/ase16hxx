@@ -171,8 +171,8 @@ class Problem(object):
         return pareto
 
     def sortlist(self, pareto):
-        sorted(pareto, key=lambda tup: (tup[0], tup[1], tup[2]))
-        return pareto
+        sorted(data, key=lambda tup: (tup[1],tup[2]) )
+[(1, 1, 4), (1, 2, 1), (1, 2, 3)]
 
     def GA_sortlist(self, pareto):
         sum_list = []
@@ -182,20 +182,13 @@ class Problem(object):
         sum_list.sort()
         return sum_list
 
-    def euclid(self, one, two):
-        values1 = one.fitness.values
-        values2 = two.fitness.values
-        dist_euclid = ((values1[0] - values2[0]) ** 2 + (values1[1] - values2[1]) ** 2 + (
-        values1[2] - values2[2]) ** 2) ** 0.5
-        return dist_euclid
-
     def spread(self, pareto_soln):
         n = len(pareto_soln)
-        d_l = self.euclid(pareto_soln[0], pareto_soln[1])
-        d_f = self.euclid(pareto_soln[n - 1], pareto_soln[n - 2])
+        d_l = pareto_soln[1] - pareto_soln[0]
+        d_f = pareto_soln[n - 1] - pareto_soln[n - 2]
         distances = []
         for i in range(1, n - 1):
-            distances.append(self.euclid(pareto_soln[i], pareto_soln[i + 1]))
+            distances.append(pareto_soln[i + 1] - pareto_soln[i])
         d_bar = sum(distances) / len(distances)
         d_sum = sum([abs(d_i - d_bar) for d_i in distances])
         delta = (d_f + d_l + d_sum) / (d_f + d_l + (n - 1) * d_bar)
@@ -248,11 +241,10 @@ commpareto = []
 """
 print ("GA BDOM")
 ga = GA(newProblem, "bdom")
-ga.solve(newProblem.nodelist)
-#gabpop, gabpareto = ga.solve(newProblem.nodelist)
-#print ("GA CDOM")
-#ga.domn = "cdom"
-#gacpop, gacpareto = ga.solve(newProblem.nodelist)
+gabpop, gabpareto = ga.solve(newProblem.nodelist)
+print ("GA CDOM")
+ga.domn = "cdom"
+gacpop, gacpareto = ga.solve(newProblem.nodelist)
 """
 print ("NSGA2 BDOM")
 nsga = NSGA2(newProblem)
@@ -260,21 +252,12 @@ nsgabpopulation, logbook, nsgabpareto = nsga.main(nsga.bdom)
 print ("NSGA2 CDOM")
 nsgacpopulation, logbook, nsgacpareto = nsga.main(nsga.cdom)
 
-print ("SPEA BDOM")
-spea = SPEA(newProblem)
-speabpopulation, logbook, speabpareto = spea.main(spea.bdom)
-
 temp_pareto = newProblem.normalize(nsgabpareto)
 sums = newProblem.sortlist(temp_pareto)
 spread_val = newProblem.spread(sums)
 print(spread_val)
 
 temp_pareto = newProblem.normalize(nsgacpareto)
-sums = newProblem.sortlist(temp_pareto)
-spread_val = newProblem.spread(sums)
-print(spread_val)
-
-temp_pareto = newProblem.normalize(speabpareto)
 sums = newProblem.sortlist(temp_pareto)
 spread_val = newProblem.spread(sums)
 print(spread_val)

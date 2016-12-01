@@ -122,4 +122,3 @@ class TSP(object):
         print("Time")
         print(self.get_totaltime(self.best_solution))
         return self.best_solution
-

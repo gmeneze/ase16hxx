@@ -1,10 +1,7 @@
-import numpy, array, random, math, sys
-
+import array, random, math, sys, numpy
 from deap import creator, base, tools, algorithms
 
-
-
-class NSGA2(object):
+class SPEA(object):
     def __init__(self, problem):
         self.problem = problem
         self.distance_map = problem.cost_matrix
@@ -21,7 +18,7 @@ class NSGA2(object):
         self.toolbox.register("population", tools.initRepeat, list, self.toolbox.individual)
         self.toolbox.register("mate", tools.cxPartialyMatched)
         self.toolbox.register("mutate", tools.mutShuffleIndexes, indpb=0.05)
-        self.toolbox.register("select", tools.selNSGA2)
+        self.toolbox.register("select", tools.selSPEA2)
         self.toolbox.register("evaluate", self.evalTSP)
 
     def evalTSP(self, individual):
@@ -110,7 +107,7 @@ class NSGA2(object):
                 return True
         return False
 
-    def main(self, dom = bdom):
+    def main(self, dom):
         random.seed(169)
 
         NGEN = 25#0
@@ -146,7 +143,8 @@ class NSGA2(object):
         # Begin the generational process
         for gen in range(1, NGEN):
             # Vary the population
-            offspring = tools.selTournamentDCD(pop, len(pop))
+            #offspring = tools.selTournamentDCD(pop, len(pop))
+            offspring = pop
             offspring = [self.toolbox.clone(ind) for ind in offspring]
 
             for ind1, ind2 in zip(offspring[::2], offspring[1::2]):

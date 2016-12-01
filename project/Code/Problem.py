@@ -19,6 +19,7 @@ from TSP import TSP
 from Objective import Objective
 from NSGA import NSGA
 from NSGA2 import NSGA2
+from SPEA import SPEA
 #import numpy as np
 from random import *
 import sys,re,traceback,random, operator, string, time
@@ -138,16 +139,23 @@ ga.solve(newProblem.nodelist)
 
 nsga = NSGA(newProblem)
 nsga.main(10)
-"""
+
 
 nsga = NSGA2(newProblem)
-population = nsga.main()
+population, logbook, pareto = nsga.main()
+"""
+
+nsga = SPEA(newProblem)
+#nsga = NSGA2(newProblem)
+population, logbook, pareto = nsga.main(nsga.bdom)
 mini = 1000000
 ind = None
-for i in population[0]:
+for i in population:
     print (i.fitness.values[0], i.fitness.values[1], i.fitness.values[2])
     if i.fitness.values[0] < mini:
         mini = i.fitness.values[0]
         ind = i
 print (ind)
 print (ind.fitness.values[0], ind.fitness.values[1], ind.fitness.values[2])
+print (pareto)
+print (len(pareto))

@@ -3,7 +3,7 @@ from Solution import Solution
 import math, sys
 
 class GA(object):
-    def __init__(self, problem, domn = "cdom", iterations = 1000, currentSolution = [], bestSolution = [],
+    def __init__(self, problem, domn = "cdom", iterations = 250, currentSolution = [], bestSolution = [],
                         bestFitness = 0, population = [], mutationRate = 0.2):
         self.problem = problem
         self.cost_matrix = problem.cost_matrix
@@ -16,7 +16,7 @@ class GA(object):
         self.mutationRate = mutationRate
         self.domn = domn
         
-    def generate_population(self, nodelist, num = 20):
+    def generate_population(self, nodelist, num = 100):
         self.population = [self.generate_one_solution(nodelist) for _ in range(num)]
                 
                 
@@ -78,7 +78,7 @@ class GA(object):
             try:
                 return -1 * math.e ** (w * (x1 - y1) / n)
             except:
-                return sys.maxint
+                return sys.maxsize
 
         def loss(x, y):
             losses = []
@@ -127,9 +127,9 @@ class GA(object):
 
     def dom(self, node1, node2, rev = False):
         if self.domn == "cdom":
-            self.cdom(node1, node2, rev)
+            return self.cdom(node1, node2, rev)
         else:
-            self.bdom(node1, node2, rev)
+            return self.bdom(node1, node2, rev)
 
         
     def crossover(self, mom, dad):
@@ -152,30 +152,74 @@ class GA(object):
                 j = randint(0,len(child))
                 child[i], child[j] = child[j], child[i]
         return child
+
+    def condition(self, dom, dominated):
+        if dom == "bdom":
+            if dominated == 0:
+                return True
+        elif dom == "cdom":
+            if dominated < 20:
+                return True
+        return False
         
     def getfittest(self, population):
-        best = population[0]
+        best = []
         for p in population:
-            if self.dom(p, best):
-                best = p
-        return best
+            dominates = 0
+            dominated = 0
+            for oth in population:
+                if self.dom(p, oth):
+                    dominates += 1
+                elif self.dom(oth,p):
+                    dominated += 1
+            if self.condition(self.domn, dominated):
+                best.append(p)
+        mind = 10000000
+        try:
+            b = best[randint(0,len(best) - 1)]
+        except:
+            b = population[randint(0,len(population) - 1)]
+        for p in best:
+            if p.distance.value < mind:
+                b = p
+                mind = p.distance.value
+        return b
         
     def getweakest(self, population):
-        weak = population[0]
+        weakest = None
+        maxdominated = 0
         for p in population:
-            if self.dom(weak, p):
-                weak = p
-        return weak
+            dominates = 0
+            dominated = 0
+            for oth in population:
+                if self.dom(p, oth):
+                    dominates += 1
+                elif self.dom(oth, p):
+                    dominated += 1
+            if dominated > maxdominated:
+                maxdominated = dominated
+                weakest = p
+        if weakest == None:
+            weakest = population[-1]
+        return weakest
         
     def evolve(self, population):
-        mom = self.getfittest(population)
-        population.remove(mom)
-        dad = self.getfittest(population)
-        population.remove(dad)
+        prob = 0.5
+        if random() > prob:
+            mom = self.getfittest(population)
+            population.remove(mom)
+            dad = self.getfittest(population)
+            population.remove(dad)
+        else:
+            mom = population[randint(0,len(population) - 1)]
+            population.remove(mom)
+            dad = population[randint(0,len(population) - 1)]
+            population.remove(dad)
+
         child = self.crossover(mom, dad)
         dist = self.get_totaldistance(child)
-        time= self.get_totaltime(child)
-        childSolution = Solution(child,dist,time)
+        time, satisfaction = self.get_totaltime(child)
+        childSolution = Solution(child,dist,time, satisfaction)
         weak = self.getweakest(population)
         population.append(mom)
         population.append(dad)
@@ -183,16 +227,43 @@ class GA(object):
             population.remove(weak)
             population.append(childSolution)
 
+    def condition(self, dom, dominated):
+        if dom == "bdom":
+            if dominated == 0:
+                return True
+        elif dom == "cdom":
+            if dominated < 20:
+                return True
+        return False
 
     def solve(self, nodelist):
         self.generate_population(nodelist)
-        for _ in range(self.iterations):
+        print ("Iterations")
+        for i in range(self.iterations):
+            if i %50 == 0:
+                print(i, end='', flush=True)
+            elif i % 5 == 0:
+                print (".", end='', flush=True)
             self.evolve(self.population)
         fittest = self.getfittest(self.population)
-        for i in (fittest.path):
-            print (i.id,)
-        print ("")
+        weakest = self.getweakest(self.population)
         print ("Population")
         for i in self.population:
             print (i.distance.value, i.time.value, i.satisfaction.value)
+        print ("Now")
         print (fittest.distance.value, fittest.time.value, fittest.satisfaction.value)
+        print(weakest.distance.value, weakest.time.value, weakest.satisfaction.value)
+        pareto = []
+        for ind in self.population:
+            dominates = 0
+            dominated = 0
+            for oth in self.population:
+                if oth == ind:
+                    continue
+                if self.dom(ind, oth):
+                    dominates += 1
+                elif self.dom(oth, ind):
+                    dominated += 1
+            if self.condition(self.domn, dominated):
+                pareto.append(ind)
+        return self.population, pareto

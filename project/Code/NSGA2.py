@@ -113,7 +113,7 @@ class NSGA2(object):
     def main(self, dom = bdom):
         random.seed(169)
 
-        NGEN = 25#0
+        NGEN = 250
         MU = 100
         CXPB = 0.9
 

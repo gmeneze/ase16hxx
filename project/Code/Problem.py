@@ -91,6 +91,121 @@ class Problem(object):
                     #route = Route(self.nodelist[i], self.nodelist[j])
                     self.speed_matrix[i][j] = random.randint(20, 100)
 
+    def normalize(self, pareto):
+        low_distance = float("inf")
+        low_time = float("inf")
+        low_satisfaction = float("inf")
+        high_distance = 0
+        high_time = 0
+        high_satisfaction = 0
+        for solution in pareto:
+            values = solution.fitness.values
+            if values[0] < low_distance:
+                low_distance = values[0]
+            if values[0] > high_distance:
+                high_distance = values[0]
+            if values[1] < low_time:
+                low_time = values[1]
+            if values[1] > high_time:
+                high_time = values[1]
+            if values[2] < low_satisfaction:
+                low_satisfaction = values[2]
+            if values[2] > high_satisfaction:
+                high_satisfaction = values[2]
+        for solution in pareto:
+            temp_dist, temp_time, temp_satisfaction = solution.fitness.values
+            if high_distance == low_distance:
+                sol_dist = 0
+            else:
+                sol_dist = (temp_dist - low_distance) / (high_distance - low_distance)
+            if high_time == low_time:
+                sol_time = 0
+            else:
+                sol_time = (temp_time - low_time) / (high_time - low_time)
+            if high_satisfaction == low_satisfaction:
+                sol_sat = 0
+            else:
+                sol_sat = 1 - (
+                    (temp_satisfaction - low_satisfaction) / (high_satisfaction - low_satisfaction))
+            solution.fitness.values = (sol_dist, sol_time, sol_sat)
+        return pareto
+
+
+    def GA_normalize(self, pareto):
+        low_distance = float("inf")
+        low_time = float("inf")
+        low_satisfaction = float("inf")
+        high_distance = 0
+        high_time = 0
+        high_satisfaction = 0
+        for solution in pareto:
+            if solution.distance.value < low_distance:
+                low_distance = solution.distance.value
+            if solution.distance.value > high_distance:
+                high_distance = solution.distance.value
+            if solution.time.value < low_time:
+                low_time = solution.time.value
+            if solution.time.value > high_time:
+                high_time = solution.time.value
+            if solution.satisfaction.value < low_satisfaction:
+                low_satisfaction = solution.satisfaction.value
+            if solution.satisfaction.value > high_satisfaction:
+                high_satisfaction = solution.satisfaction.value
+        for solution in pareto:
+            temp_dist = solution.distance.value
+            temp_time = solution.time.value
+            temp_satisfaction = solution.satisfaction.value
+            if high_distance == low_distance:
+                solution.distance.value = 0
+            else:
+                solution.distance.value = (temp_dist - low_distance) / (high_distance - low_distance)
+            if high_time == low_time:
+                solution.time.value = 0
+            else:
+                solution.time.value = (temp_time - low_time) / (high_time - low_time)
+            if high_satisfaction == low_satisfaction:
+                solution.satisfaction.value = 0
+            else:
+                solution.satisfaction.value = 1 - (
+                    (temp_satisfaction - low_satisfaction) / (high_satisfaction - low_satisfaction))
+        return pareto
+
+    def sortlist(self, pareto):
+        sorted(pareto, key=lambda tup: (tup[0], tup[1], tup[2]))
+        return pareto
+
+    def GA_sortlist(self, pareto):
+        sum_list = []
+        for solution in pareto:
+            temp_sum = (solution.distance.value , solution.time.value , solution.satisfaction.value)
+            sum_list.append(temp_sum)
+        sorted(sum_list, key=lambda tup: (tup[0], tup[1], tup[2]))
+        return sum_list
+
+    def euclid(self, one, two):
+        try:
+            values1 = one.fitness.values
+            values2 = two.fitness.values
+        except:
+            values1 = one
+            values2 = two
+
+        dist_euclid = ((values1[0] - values2[0]) ** 2 + (values1[1] - values2[1]) ** 2 + (
+                values1[2] - values2[2]) ** 2) ** 0.5
+        return dist_euclid
+
+    def spread(self, pareto_soln):
+        n = len(pareto_soln)
+        d_l = self.euclid(pareto_soln[0], pareto_soln[1])
+        d_f = self.euclid(pareto_soln[n - 1], pareto_soln[n - 2])
+        distances = []
+        for i in range(1, n - 1):
+            distances.append(self.euclid(pareto_soln[i], pareto_soln[i + 1]))
+        d_bar = sum(distances) / len(distances)
+        d_sum = sum([abs(d_i - d_bar) for d_i in distances])
+        delta = (d_f + d_l + d_sum) / (d_f + d_l + (n - 1) * d_bar)
+        return delta
+
 
 """
 for i in range(10):
@@ -132,6 +247,102 @@ newProblem.objectives.append(Objective("distance"))
 newProblem.objectives.append(Objective("time"))
 newProblem.objectives.append(Objective("satisfaction", None ,False))
 newProblem.__repr__()
+
+
+commpareto = []
+
+start_time = time.time()
+print ("GA BDOM")
+ga = GA(newProblem, "bdom")
+gabpop, gabpareto = ga.solve(newProblem.nodelist)
+end_time = time.time()
+print("Time taken : %s"  % (end_time - start_time))
+
+start_time = time.time()
+print ("GA CDOM")
+ga.domn = "cdom"
+gacpop, gacpareto = ga.solve(newProblem.nodelist)
+end_time = time.time()
+print("Time taken : %s"  % (end_time - start_time))
+
+start_time = time.time()
+print ("NSGA2 BDOM")
+nsga = NSGA2(newProblem)
+nsgabpopulation, logbook, nsgabpareto = nsga.main(nsga.bdom)
+end_time = time.time()
+print("Time taken : %s"  % (end_time - start_time))
+
+start_time = time.time()
+print ("NSGA2 CDOM")
+nsgacpopulation, logbook, nsgacpareto = nsga.main(nsga.cdom)
+end_time = time.time()
+print("Time taken : %s"  % (end_time - start_time))
+
+start_time = time.time()
+print ("SPEA BDOM")
+spea = SPEA(newProblem)
+speabpopulation, logbook, speabpareto = spea.main(spea.bdom)
+end_time = time.time()
+print("Time taken : %s"  % (end_time - start_time))
+
+start_time = time.time()
+print ("SPEA CDOM")
+speacpopulation, logbook, speacpareto = spea.main(spea.cdom)
+end_time = time.time()
+print("Time taken : %s"  % (end_time - start_time))
+
+
+print(len(gabpareto))
+temp_pareto = newProblem.GA_normalize(gabpareto)
+sums = newProblem.GA_sortlist(temp_pareto)
+spread_val = newProblem.spread(sums)
+print ("GA BDOM Spread")
+print(spread_val)
+
+print(len(gacpareto))
+temp_pareto = newProblem.GA_normalize(gacpareto)
+sums = newProblem.GA_sortlist(temp_pareto)
+spread_val = newProblem.spread(sums)
+print ("GA CDOM Spread")
+print(spread_val)
+
+print(len(nsgabpareto))
+temp_pareto = newProblem.normalize(nsgabpareto)
+sums = newProblem.sortlist(temp_pareto)
+spread_val = newProblem.spread(sums)
+print ("NSGA BDOM Spread")
+print(spread_val)
+
+print(len(nsgacpareto))
+temp_pareto = newProblem.normalize(nsgacpareto)
+sums = newProblem.sortlist(temp_pareto)
+spread_val = newProblem.spread(sums)
+print ("NSGA CDOM Spread")
+print(spread_val)
+
+commpareto.append(speabpareto)
+temp_pareto = newProblem.normalize(speabpareto)
+sums = newProblem.sortlist(temp_pareto)
+spread_val = newProblem.spread(sums)
+print ("SPEA BDOM Spread")
+print(spread_val)
+
+commpareto.append(speacpareto)
+temp_pareto = newProblem.normalize(speacpareto)
+sums = newProblem.sortlist(temp_pareto)
+spread_val = newProblem.spread(sums)
+print ("SPEA CDOM Spread")
+print(spread_val)
+
+
+
+commpareto.append(gabpareto)
+commpareto.append(gacpareto)
+commpareto.append(nsgabpareto)
+commpareto.append(nsgacpareto)
+commpareto.append(speabpareto)
+commpareto.append(speacpareto)
+
 """
 ga = GA(newProblem, "cdom")
 ga.solve(newProblem.nodelist)
@@ -143,7 +354,7 @@ nsga.main(10)
 
 nsga = NSGA2(newProblem)
 population, logbook, pareto = nsga.main()
-"""
+
 
 nsga = SPEA(newProblem)
 #nsga = NSGA2(newProblem)
@@ -159,3 +370,4 @@ print (ind)
 print (ind.fitness.values[0], ind.fitness.values[1], ind.fitness.values[2])
 print (pareto)
 print (len(pareto))
+"""

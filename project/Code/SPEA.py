@@ -110,7 +110,7 @@ class SPEA(object):
     def main(self, dom):
         random.seed(169)
 
-        NGEN = 25#0
+        NGEN = 250
         MU = 100
         CXPB = 0.9
 

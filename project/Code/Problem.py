@@ -15,7 +15,7 @@ from Algorithm import Algorithm
 from Drawer import Drawer
 from Route import Route
 from GA import GA
-from TSP import TSP
+from Tabu import Tabu, tabumain
 from Objective import Objective
 from NSGA import NSGA
 from NSGA2 import NSGA2
@@ -225,42 +225,7 @@ class Problem(object):
         return delta
 
 
-"""
-for i in range(10):
-    newProblem = Problem(30,1)
-    #for n in newProblem.nodelist:
-        #print(n.id, n.xcordinate, n.ycordinate)
-    #for v in newProblem.vehicle:
-        #print(v.v_id, v.x, v.y)
-    #print(newProblem.cost_matrix)40
-    #print(newProblem.speed_matrix)
-    current_soln = list(range(0, newProblem.num_of_nodes))
-    current_soln.append(0)
-    #print(current_soln)
-    #print(newProblem.determine_cost(current_soln))
-    print("Iteration"+str(i))
-    for iterations in range(10,10,10):
-        print("IterationSize = "+str(iterations))
-        for tabulen in range(10,30,10):
-            print("Tabu List Length = " + str(tabulen))
-            print("Optimizing Distance")
-            tsp = TSP(newProblem.cost_matrix, newProblem.speed_matrix, current_soln, 10, 10, newProblem.num_of_nodes,1)
-            best_solution = tsp.solve_tabu()
-            #drawer = Drawer()
-            #drawer.draw_path(newProblem.nodelist,best_solution)
-            print("Optimizing Time")
-            tsp = TSP(newProblem.cost_matrix, newProblem.speed_matrix, current_soln, 10, 10, newProblem.num_of_nodes,2)
-            best_solution = tsp.solve_tabu()
-            print("-----------------------------------------Solution--------------------------------------------------")
-            #drawer = Drawer()
-            #drawer.draw_path(newProblem.nodelist,best_solution)
-        print("-------------------------------------------------------TabuLen------------------------------------")
-    print("----------------------------------------------------Inner Iteration------------------------------------")
-print("------------------------------------------------------Outer Iteration----------------------------------------")
-"""
-
-
-newProblem = Problem(1000,1)
+newProblem = Problem(10,1)
 newProblem.objectives.append(Objective("distance"))
 newProblem.objectives.append(Objective("time"))
 newProblem.objectives.append(Objective("satisfaction", None ,False))
@@ -270,6 +235,12 @@ for i in [100]:
     print ("_------------------------------------------------------------------------")
     print ("NUMBER OF ITERATIONS - " + str(i))
     commpareto = []
+
+    start_time = time.time()
+    print("TABU Search")
+    tabupop, tabupareto = tabumain(newProblem)
+    end_time = time.time()
+    print("Time taken : %s" % (end_time - start_time))
 
     start_time = time.time()
     print ("GA BDOM")
@@ -317,6 +288,13 @@ for i in [100]:
     end_time = time.time()
     print("Time taken : %s"  % (end_time - start_time))
 
+    print(len(tabupareto))
+    temp_pareto = newProblem.GA_normalize(
+        [(sol.distance.value, sol.time.value, sol.satisfaction.value) for sol in tabupareto])
+    sums = newProblem.GA_sortlist(temp_pareto)
+    spread_val = newProblem.spread(sums)
+    print("TABU BDOM Spread")
+    print(spread_val)
 
     print(len(gabpareto))
     temp_pareto = newProblem.GA_normalize([(sol.distance.value, sol.time.value, sol.satisfaction.value) for sol in gabpareto])
@@ -360,7 +338,7 @@ for i in [100]:
     print ("SPEA CDOM Spread")
     print(spread_val)
 
-
+    commpareto += ([(sol.distance.value, sol.time.value, sol.satisfaction.value) for sol in tabupareto])
     commpareto+= ([(sol.distance.value, sol.time.value, sol.satisfaction.value) for sol in gabpareto])
     commpareto+=([(sol.distance.value, sol.time.value, sol.satisfaction.value) for sol in gacpareto])
     commpareto+=([sol.fitness.values for sol in nsgapareto])
@@ -371,6 +349,7 @@ for i in [100]:
 
     ideal_pareto = newProblem.GA_normalize(commpareto)
     #ideal_sorted = newProblem.sortlist(ideal_pareto)
+    obtain_pareto_tabu = newProblem.GA_normalize([(sol.distance.value, sol.time.value, sol.satisfaction.value) for sol in tabupareto])
     obtain_pareto_ga = newProblem.GA_normalize([(sol.distance.value, sol.time.value, sol.satisfaction.value) for sol in gabpareto])
     obtain_pareto_nsga = newProblem.GA_normalize([sol.fitness.values for sol in nsgapareto])
     obtain_pareto_spea = newProblem.GA_normalize([sol.fitness.values for sol in speabpareto])
@@ -380,6 +359,7 @@ for i in [100]:
     cobtain_pareto_nsga = newProblem.GA_normalize([sol.fitness.values for sol in nsgacpareto])
     cobtain_pareto_spea = newProblem.GA_normalize([sol.fitness.values for sol in speacpareto])
     #obtain_sorted = newProblem.sortlist(obtain_pareto)
+    igd_val_tabu = newProblem.igd(ideal_pareto, obtain_pareto_tabu)
     igd_val_ga = newProblem.igd(ideal_pareto, obtain_pareto_ga)
     igd_val_nsga = newProblem.igd(ideal_pareto,obtain_pareto_nsga)
     igd_val_spea = newProblem.igd(ideal_pareto, obtain_pareto_spea)
@@ -388,6 +368,8 @@ for i in [100]:
     cigd_val_nsga = newProblem.igd(ideal_pareto, cobtain_pareto_nsga)
     cigd_val_spea = newProblem.igd(ideal_pareto, cobtain_pareto_spea)
 
+    print("IGD TABU--------------------------")
+    print(igd_val_tabu)
     print("IGD GA--------------------------")
     print(igd_val_ga)
     print ("IGD NSGA--------------------------")
@@ -403,34 +385,12 @@ for i in [100]:
     print(cigd_val_spea)
 
 
-    """
-    ga = GA(newProblem, "cdom")
-    ga.solve(newProblem.nodelist)
-
-
-    nsga = NSGA(newProblem)
-    nsga.main(10)
-
-
-    nsga = NSGA2(newProblem)
-    population, logbook, pareto = nsga.main()
-
-
-    nsga = SPEA(newProblem)
-    #nsga = NSGA2(newProblem)
-    population, logbook, pareto = nsga.main(nsga.bdom)
-    mini = 1000000
-    ind = None
-    for i in population:
-        print (i.fitness.values[0], i.fitness.values[1], i.fitness.values[2])
-        if i.fitness.values[0] < mini:
-            mini = i.fitness.values[0]
-            ind = i
-    print (ind)
-    print (ind.fitness.values[0], ind.fitness.values[1], ind.fitness.values[2])
-    print (pareto)
-    print (len(pareto))
-    """
+    print ("TABU")
+    for i in tabupop:
+        print(i.distance.value, i.time.value, i.satisfaction.value)
+    print("TABU Pareto")
+    for i in tabupareto:
+        print(i.distance.value, i.time.value, i.satisfaction.value)
     print ("GA")
     for i in gabpop:
         print(i.distance.value, i.time.value, i.satisfaction.value)

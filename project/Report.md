@@ -16,7 +16,7 @@ Software teams spend a lot of effort to reduce errors and fix the errors that ha
 
 ## Introduction 
 
-Travelling Salesman problem is one of the oldest and one of the most intensively studied problems in optimization[1]. The time complexity for finding an exact solution for the Travelling Salesman Problem is in O(n!). Originally, the only objective of the problem is to obtain the optimal path such that the overall distance travelled is minimized. The time increases drastically when more objectives such as speed per path and satisfaction criteria (explained below) are added. Finding an exact solution becomes impossible even for 20 locations (based on our observations below). Therefore, various heuristics and approximate solutions are used in order to find a decent solution to the Travelling Salesman Problem, in a time efficient manner. In this project, we apply three heuristic optimization algorithms to the Travelling Salesman Problem and compare their performance based on the number of locations. We will be using time taken to reach the optimum solution as the metric for comparison of these algorithms.
+Travelling Salesman problem is one of the oldest and one of the most intensively studied problems in optimization [1]. The time complexity for finding an exact solution for the Travelling Salesman Problem is in O(n!). Originally, the only objective of the problem is to obtain the optimal path such that the overall distance travelled is minimized. The time increases drastically when more objectives such as speed per path and satisfaction criteria (explained below) are added. Finding an exact solution becomes impossible even for 20 locations (based on our observations below). Therefore, various heuristics and approximate solutions are used in order to find a decent solution to the Travelling Salesman Problem, in a time efficient manner. In this project, we apply three heuristic optimization algorithms to the Travelling Salesman Problem and compare their performance based on the number of locations. We will be using time taken to reach the optimum solution as the metric for comparison of these algorithms.
 
 The goal of this project is to find the optimal path for a salesman who has to travel to multiple locations without visiting any location twice under several constraints such as .. The objectives of optimization are -, -, and -.
 
@@ -250,7 +250,7 @@ IPMDFC is a software model that illustrates the flow chains of different softwar
 We earnestly thank course instructor Dr. Tim Menzies, and teaching assistant Rahul Krishna for giving us valuable advice in implementing the project.
 
 ## References 
-[1] T. Abdel-Hamid, and S. Madnick, "Software Project Dynamics: An Integrated Approach", Prentice Hall, NJ, USA, 1990 
+[1] Daniel J. Rosenkrantz, Richard E. Stearns, Philip M. LewisII, "An analysis of several heuristics for the traveling salesman problem", SIAMJ.Computing,Vol.6,No.3,Sept.1977,pp.563–581.
 
 [2] R. Becerra, R. Sagarna, and X. Yao, "An evaluation of Differential Evolution in software test data generation," in Proceedings of IEEE Congress on Evolutionary Computation (CEC), Vienna, Austria, pages 2850-2857, May, 2009
 

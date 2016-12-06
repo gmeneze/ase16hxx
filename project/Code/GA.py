@@ -3,7 +3,7 @@ from Solution import Solution
 import math, sys
 
 class GA(object):
-    def __init__(self, problem, domn = "cdom", iterations = 250, currentSolution = [], bestSolution = [],
+    def __init__(self, problem, domn = "cdom", iterations = 100, currentSolution = [], bestSolution = [],
                         bestFitness = 0, population = [], mutationRate = 0.2):
         self.problem = problem
         self.cost_matrix = problem.cost_matrix

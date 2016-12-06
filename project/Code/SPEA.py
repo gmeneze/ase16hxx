@@ -107,10 +107,10 @@ class SPEA(object):
                 return True
         return False
 
-    def main(self, dom):
+    def main(self, dom, NGEN):
         random.seed(169)
 
-        NGEN = 250
+        NGEN = NGEN#0
         MU = 100
         CXPB = 0.9
 

@@ -1,6 +1,6 @@
 #import numpy as np
 import copy
-class TSP(object):
+class Tabu(object):
     def __init__(self, cost_matrix, speed_matrix, initial_solution, num_iterations, tabu_len, num_of_nodes,metric):
         self.cost_matrix = cost_matrix
         self.speed_matrix = speed_matrix

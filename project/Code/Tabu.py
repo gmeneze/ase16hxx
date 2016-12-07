@@ -210,7 +210,7 @@ def tabumain(newProblem):
     tabupop = []
     current_soln = list(range(0, newProblem.num_of_nodes))
     current_soln.append(0)
-    for iterations in range(10, 30, 10):
+    for iterations in range(1, 30, 10):
         print("IterationSize = " + str(iterations))
         for tabulen in range(10, 30, 10):
             print("Tabu List Length = " + str(tabulen))

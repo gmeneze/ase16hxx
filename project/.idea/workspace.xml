@@ -23,8 +23,8 @@
       <file leaf-file-name="Problem.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Code/Problem.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="227" column="23" selection-start-line="227" selection-start-column="23" selection-end-line="227" selection-end-column="23" />
+            <state relative-caret-position="150">
+              <caret line="349" column="14" selection-start-line="349" selection-start-column="14" selection-end-line="349" selection-end-column="14" />
               <folding>
                 <element signature="e#194#240#0" expanded="true" />
               </folding>
@@ -35,8 +35,8 @@
       <file leaf-file-name="Tabu.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Code/Tabu.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="243" column="27" selection-start-line="243" selection-start-column="27" selection-end-line="243" selection-end-column="27" />
+            <state relative-caret-position="225">
+              <caret line="15" column="62" selection-start-line="15" selection-start-column="62" selection-end-line="15" selection-end-column="62" />
               <folding>
                 <element signature="e#20#42#0" expanded="true" />
               </folding>
@@ -81,7 +81,7 @@
       <file leaf-file-name="SPEA.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Code/SPEA.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="275">
+            <state relative-caret-position="-285">
               <caret line="143" column="32" selection-start-line="143" selection-start-column="28" selection-end-line="143" selection-end-column="32" />
               <folding />
             </state>
@@ -125,8 +125,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/Code/Domination.py" />
-        <option value="$PROJECT_DIR$/Code/Tabu.py" />
         <option value="$PROJECT_DIR$/Code/Problem.py" />
+        <option value="$PROJECT_DIR$/Code/Tabu.py" />
       </list>
     </option>
   </component>
@@ -362,6 +362,9 @@
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
   </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="16f89e24-d41d-4d1c-9a68-25d7ac429d97" name="Default" comment="" />
@@ -374,14 +377,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="24" width="1366" height="744" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24963397" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32935917" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32935917" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
@@ -411,14 +414,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Code/SPEA.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="143" column="32" selection-start-line="143" selection-start-column="28" selection-end-line="143" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Code/Solution.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -477,18 +472,26 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Code/Tabu.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="243" column="27" selection-start-line="243" selection-start-column="27" selection-end-line="243" selection-end-column="27" />
+        <state relative-caret-position="225">
+          <caret line="15" column="62" selection-start-line="15" selection-start-column="62" selection-end-line="15" selection-end-column="62" />
           <folding>
             <element signature="e#20#42#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Code/SPEA.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-285">
+          <caret line="143" column="32" selection-start-line="143" selection-start-column="28" selection-end-line="143" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Code/Problem.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="227" column="23" selection-start-line="227" selection-start-column="23" selection-end-line="227" selection-end-column="23" />
+        <state relative-caret-position="150">
+          <caret line="349" column="14" selection-start-line="349" selection-start-column="14" selection-end-line="349" selection-end-column="14" />
           <folding>
             <element signature="e#194#240#0" expanded="true" />
           </folding>

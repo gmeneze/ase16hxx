@@ -1,0 +1,7 @@
+# Folders
+
+ignore/
+Code/__pycache__
+# Extensions
+
+Code/__init__.py
